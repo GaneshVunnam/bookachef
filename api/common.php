@@ -279,6 +279,42 @@ if(isset($Action) && $Action == "login"){
         // echo $ex->getMessage();
     }
    
+}else if(isset($Action) && $Action == "get_chef_details"){
+
+    try {
+       
+        $Profile = "assets/img/profile.jpg";
+
+        $Query = "SELECT * FROM tbl_login WHERE user_type = 'chef'";
+        $Results = mysqli_query($conn,$Query);
+        $ChefArray = array();
+
+        if (mysqli_num_rows($Results) > 0) 
+        {
+            while($record = mysqli_fetch_assoc($Results)) 
+            {
+                $data = array();
+                $data["id"]              = $record["id"];
+                $data["username"]        = $record["username"];
+                $data["email"]           = $record["email"];
+                $data["image"]           = $Profile;
+            
+
+                array_push($ChefArray,$data);
+
+            }
+
+        }
+
+
+        $ResponseArray["chefs"]       = $ChefArray;
+     
+    } catch (Exception $ex) {
+        $ResponseArray["status"]  = "500";
+        $ResponseArray["message"] = $ex->getMessage();
+        // echo $ex->getMessage();
+    }
+   
 }else if(isset($Action) && $Action == "booknow"){
 
     try {
