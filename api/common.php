@@ -306,7 +306,7 @@ if(isset($Action) && $Action == "login"){
 
         }
 
-
+        $ResponseArray["status"]      = "200";
         $ResponseArray["chefs"]       = $ChefArray;
      
     } catch (Exception $ex) {

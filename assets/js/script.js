@@ -276,8 +276,7 @@ function(){
     url: "api/common.php",
     type: "POST",
     data: {
-              action: "get_cuisine_details", 
-              id: this.value, 
+              action: "get_chef_details", 
          },
   
     success: function(data) {
@@ -285,22 +284,16 @@ function(){
 
          if (details["status"] == "200") {
 
-            // console.log(details["categories"]);
-            // console.log(details["menus"]);
+            console.log(details["chefs"]);
 
-            $("#categoryitem").html('');
-            $("#menucontainer").html('');
 
-            $("#categoryitem").append('<span data-filter>All</span>');
+            $("#chefcontainer").html('');
 
-            for(let i = 0; i < details["categories"].length; i++) {
-                let category = details["categories"][i];
-                $("#categoryitem").append('<span data-filter="'+category.category+'">'+category.category+'</span>');
-            }
 
-            for(let j = 0; j < details["menus"].length; j++) {
-                let menus = details["menus"][j];
-                $("#menucontainer").append('<div data-tags="'+menus.category+'" class="m-wizard-buttons-grid__item" style="text-align: center;"><input type="checkbox" name="menuoption[]" id="m'+j+'" value="'+menus.id+'" class="hidden"><label for="m'+j+'" class="u-font-size-16"><span class="a-button-wizard d-block" style="min-width: 9.75rem;margin:0px 10px;padding: 1rem 1rem;"><span class="d-block"><strong>'+menus.dish+'</strong></span><span class="d-block font-weight-normal">₹'+menus.price+'</span></span></label></div>');
+     
+            for(let j = 0; j < details["chefs"].length; j++) {
+                let chef = details["chefs"][j];
+                $("#chefcontainer").append('<div data-tags="'+chef.username+'" class="m-wizard-buttons-grid__item" style="text-align: center;"><input type="checkbox" name="menuoption[]" id="m'+j+'" value="'+chef.id+'" class="hidden"><label for="m'+j+'" class="u-font-size-16"><span class="a-button-wizard d-block" style="min-width: 9.75rem;margin:0px 10px;padding: 1rem 1rem;"><span class="d-block"><strong>'+chef.username+'</strong></span><span class="d-block font-weight-normal">₹'+chef.username+'</span></span></label></div>');
             }
             $(function ($) {
                 $.autofilter();
