@@ -8,5 +8,5 @@ unset($_SESSION["adminemail"]);
 
 // session_unset();
 // session_destroy();
-header('location:index.php');
+header('location:../Intro.html');
 ?>

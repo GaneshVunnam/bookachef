@@ -39,6 +39,10 @@
                     <div class="col-md-12"><label class="labels">Email ID</label><input type="text" id="email" name="email" class="form-control" placeholder="enter email id" value="<?php echo $Profile["email"]; ?>"></div>
                 </div>
                 <div class="row mt-3">
+                    <div class="col-md-6"><label class="labels">Experience</label><input type="text" id="experience" name="experience" class="form-control" placeholder="Experience" value="<?php echo $Profile["experience"]; ?>"></div>
+                    <div class="col-md-6"><label class="labels">City</label><input type="text" class="form-control" id="city" name="city" value="<?php echo $Profile["city"]; ?>" placeholder="City"></div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-md-6"><label class="labels">Country</label><input type="text" id="country" name="country" class="form-control" placeholder="country" value="<?php echo $Profile["country"]; ?>"></div>
                     <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" id="state" name="state" value="<?php echo $Profile["state"]; ?>" placeholder="state"></div>
                 </div>

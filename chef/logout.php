@@ -9,5 +9,6 @@ unset($_SESSION['chefemail']);
 unset($_SESSION['usertype']);
 unset($_SESSION['chef_logged_in']);
 
-header('location:index.php');
+// header('location:index.php');
+header('location:../Intro.html');
 ?>

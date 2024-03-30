@@ -20,6 +20,12 @@
     <script type="text/javascript" src="assets/packages/daterangepicker/daterangepicker.js"></script>
     <script src="assets/js/script.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap" rel="stylesheet">
+
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  
+    <script data-src="https://unpkg.com/popper.js@1.14.7/dist/popper.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-select@1.13.8/dist/js/bootstrap-select.min.js"></script>
   </body>
 
 </html>

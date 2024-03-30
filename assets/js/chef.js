@@ -29,6 +29,36 @@ function login()
     });
 }
 
+function cancelorder(id){
+
+     $.ajax({
+         url: "../api/common.php",
+         type: "POST",
+         data: {
+                   action: "cancel_order", 
+                   id: id, 
+              },
+       
+         success: function(data) {
+              var details = JSON.parse(data);
+ 
+              if (details["status"] == "200") {
+ 
+                alert(details["message"]);
+                window.location.replace("index.php");
+                
+ 
+              } else {
+                 alert(details["message"]);
+              }
+         },
+         error: function() {
+              alert("E4: Add Favourite Error.");
+              return false;
+         }
+    });
+ }
+
 $("#bt_update_profile").click(function(){
      updateprofile();
  });

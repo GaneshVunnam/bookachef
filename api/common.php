@@ -326,6 +326,10 @@ if(isset($Action) && $Action == "login"){
         $cuisine		= addslashes((trim($_REQUEST["CuisineOption"])));
         // $ingredients	= addslashes((trim($_REQUEST['ingredientsoption'])));
         $restrictions	= addslashes((trim($_REQUEST["SpecificRestrictions"])));
+        if(isset($_REQUEST["ChefOption"])){
+            $chef       	= addslashes((trim($_REQUEST["ChefOption"])));
+        }
+
         // $diet		    = $_REQUEST['dietoption'];
         $menu		    = $_REQUEST['menuoption'];
 
@@ -352,8 +356,17 @@ if(isset($Action) && $Action == "login"){
         $BookingsArray["conditions"]        = $restrictions;
         // $BookingsArray["restrictions"]      = implode(",",$DietArray);
         $BookingsArray["dishes"]            = implode(",",$MenuArray);
-        $BookingsArray["request"]           = "Open";
-        $BookingsArray["direct_request"]    = "NA";
+
+        if (empty($chef)) {
+            $BookingsArray["request"]           = "Open";
+
+            $BookingsArray["direct_request"]    = "NA";
+        }else{
+            $BookingsArray["request"]           = "Selective";
+
+            $BookingsArray["direct_request"]    = $chef;
+        }
+
         $BookingsArray["created_on"]        = date('Y-m-d H:i:s');
 
         $columns = implode(", ",array_keys($BookingsArray));
@@ -454,6 +467,9 @@ if(isset($Action) && $Action == "login"){
         $email		        = addslashes((trim($_REQUEST['email'])));
         $country		    = addslashes((trim($_REQUEST['country'])));
         $state		        = addslashes((trim($_REQUEST['state'])));
+        $exp		        = addslashes((trim($_REQUEST['experience'])));
+        $city		        = addslashes((trim($_REQUEST['city'])));
+
 
         $image	            = UploadImageFile("uploads",'profilepic');
 
@@ -469,6 +485,8 @@ if(isset($Action) && $Action == "login"){
         $ProfileArray["country"]            = $country;
         $ProfileArray["state"]              = $state;
         $ProfileArray["image"]              = $image;
+        $ProfileArray["exp"]                = $exp;
+        $ProfileArray["city"]               = $city;
 
 
         $UpdateProfile = "UPDATE tbl_login SET ";
@@ -544,6 +562,33 @@ if(isset($Action) && $Action == "login"){
 
         $ResponseArray["status"]      = "200";
         $ResponseArray["message"]     = "Payment Generated.";
+
+    } catch (Exception $ex) {
+        $ResponseArray["status"]  = "500";
+        $ResponseArray["message"] = $ex->getMessage();
+    }
+   
+}else if(isset($Action) && $Action == "cancel_order"){
+
+    try {
+        $id		            = addslashes((trim($_REQUEST['id'])));
+
+        $OrderArray                       = array();
+        $OrderArray["request"]            = "Open";
+        $OrderArray["direct_request"]     = "NA";
+
+        $UpdateQuery = "UPDATE tbl_bookings SET ";
+        foreach($OrderArray as $k => $v)
+        {
+            $UpdateQuery .= $k."='". $v."', ";
+        }
+        $UpdateQuery = rtrim($UpdateQuery, ", ");
+        $UpdateQuery .= " where id = $id";
+
+        $ExecuteQuery = mysqli_query($conn,$UpdateQuery) or die ("Error in query: $UpdateQuery. ".mysqli_error($conn));
+
+        $ResponseArray["status"]      = "200";
+        $ResponseArray["message"]     = "Order Rejected.";
 
     } catch (Exception $ex) {
         $ResponseArray["status"]  = "500";

@@ -61,6 +61,8 @@ $SpecialEvents = getAllSpecialEvents($conn);
 							
 							foreach ($Events as $value) 
 							{
+                $url = isset($_SESSION['uid']) ? "bookchef-v1.php" : "login.php";
+
 								echo '<div class="col-sm-6 col-lg-3 mb-3 mb-md-0 h-100 pb-4">
                 <div class="card card-span h-100">
                   <div class="position-relative"> <img class="img-fluid rounded-3 w-100" src="'.$value["image"].'" alt="..." />
@@ -74,7 +76,7 @@ $SpecialEvents = getAllSpecialEvents($conn);
                     </div>
                   </div>
                 </div>
-                <div class="d-grid gap-3 col-sm-auto"><button class="btn btn-danger"  onclick="location.href = \'bookchef-v1.php?date='.date("Y-m-d", strtotime($value["date"])).'\';"  style="margin:15px;" type="button">Book Now</button></div>
+                <div class="d-grid gap-3 col-sm-auto"><button class="btn btn-danger"  onclick="location.href = \''.$url.'?date='.date("Y-m-d", strtotime($value["date"])).'\';"  style="margin:15px;" type="button">Book Now</button></div>
               </div>';
 							}
 						?>
@@ -100,6 +102,7 @@ $SpecialEvents = getAllSpecialEvents($conn);
 							
                         foreach ($SpecialEvents as $value) 
                         {
+                          $url = isset($_SESSION['uid']) ? "bookchef-v1.php" : "login.php";
                           echo '<div class="col-sm-6 col-md-3 col-xl mb-5 h-100" style="width:20%;">
                           <div class="card card-span h-100 rounded-3"><img class="img-fluid rounded-3" style="height: 180px;width:210px;" src="'.$value["image"].'" alt="..." />
                             <div class="card-body ps-0">
@@ -107,7 +110,7 @@ $SpecialEvents = getAllSpecialEvents($conn);
                               <!-- <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">Burger Arena</span></div><span class="text-1000 fw-bold">$3.88</span> -->
                             </div>
                           </div>
-                          <div class="d-grid gap-2" style="width:210px;"><a class="btn btn-lg btn-danger" href="bookchef-v1.php " role="button">Book Now</a></div>
+                          <div class="d-grid gap-2" style="width:210px;"><a class="btn btn-lg btn-danger" href="'.$url.'" role="button">Book Now</a></div>
                         </div>';
                         }
                       ?>

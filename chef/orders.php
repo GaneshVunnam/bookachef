@@ -18,6 +18,7 @@
                                     
                                  
                                     $Status = "";
+                                    $DisplayCancelBy = "none";
 
                                     if($value["payment"] == "YES")
                                     { 
@@ -31,11 +32,19 @@
                                         $Status = '<span class="badge rounded-pill bg-warning text-dark">Pending Payment Generation.</span>';
                                     }
 
+                                    if($value["request"] == "Selective")
+                                    {
+                                        $DisplayCancelBy = "none";
+
+                                    }
+
                                     echo '
                                     <a href="#" class="list-group-item list-group-item-action" aria-current="true" style="margin-bottom: 20px;border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;border-top-right-radius: inherit;border-top-left-radius: inherit;">
                                     <div class="d-flex w-100 justify-content-between" style="margin-bottom:20px;">
                                         <h5 class="mb-1">#ORDER ID - '.$value["id"]." ".$Status.'</h5>
                                         <small>'.time_elapsed_string($value["created_on"]).'</small>
+
+                                        <button class="btn btn-primary" onclick="cancelorder(\''.$value["id"].'\')" style="background-color:#a0a301;border: 1px solid #a0a301;display:'.$DisplayCancelBy.';" type="button" >Reject</button>
                                     </div>
                                     <nav>
                                     <div class="nav nav-tabs" id="nav-tab" role="tablist">

@@ -272,42 +272,7 @@ function(){
         }
    });
 
-   $.ajax({
-    url: "api/common.php",
-    type: "POST",
-    data: {
-              action: "get_chef_details", 
-         },
   
-    success: function(data) {
-         var details = JSON.parse(data);
-
-         if (details["status"] == "200") {
-
-            console.log(details["chefs"]);
-
-
-            $("#chefcontainer").html('');
-
-
-     
-            for(let j = 0; j < details["chefs"].length; j++) {
-                let chef = details["chefs"][j];
-                $("#chefcontainer").append('<div data-tags="'+chef.username+'" class="m-wizard-buttons-grid__item" style="text-align: center;"><input type="checkbox" name="menuoption[]" id="m'+j+'" value="'+chef.id+'" class="hidden"><label for="m'+j+'" class="u-font-size-16"><span class="a-button-wizard d-block" style="min-width: 9.75rem;margin:0px 10px;padding: 1rem 1rem;"><span class="d-block"><strong>'+chef.username+'</strong></span><span class="d-block font-weight-normal">₹'+chef.username+'</span></span></label></div>');
-            }
-            $(function ($) {
-                $.autofilter();
-            });
-
-         } else {
-            alert(details["message"]);
-         }
-    },
-    error: function() {
-         alert("E4: Add Favourite Error.");
-         return false;
-    }
-});
 
 });
 
@@ -413,6 +378,36 @@ function booknow(){
               return false;
          }
     });
+}
+
+function cancelorder(id){
+
+    $.ajax({
+        url: "api/common.php",
+        type: "POST",
+        data: {
+                  action: "cancel_order", 
+                  id: id, 
+             },
+      
+        success: function(data) {
+             var details = JSON.parse(data);
+
+             if (details["status"] == "200") {
+
+               alert(details["message"]);
+               window.location.replace("index.php");
+               
+
+             } else {
+                alert(details["message"]);
+             }
+        },
+        error: function() {
+             alert("E4: Add Favourite Error.");
+             return false;
+        }
+   });
 }
 
 $("#bt_update_profile").click(function(){

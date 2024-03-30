@@ -64,6 +64,8 @@ function getProfileInfo($conn, $id)
             $data["state"]                  = $record["state"];
             $data["country"]                = $record["country"];
             $data["image"]                  = $record["image"];
+            $data["experience"]             = $record["exp"];
+            $data["city"]                   = $record["city"];
 
             return $data;
 
@@ -264,7 +266,45 @@ function getDishes($conn, $id){
 }
 
 function getAllOrdersForChef($conn){
-    $GetCategories = "SELECT * FROM tbl_bookings WHERE status = 'Order Received' ORDER BY id DESC";
+    $GetCategories = "SELECT * FROM tbl_bookings WHERE status = 'Order Received' AND request = 'Open' ORDER BY id DESC";
+    $Results    = mysqli_query($conn,$GetCategories);
+    $ListArray = array();
+
+    if (mysqli_num_rows($Results) > 0) 
+    {
+        while($record = mysqli_fetch_assoc($Results)) 
+        {
+            $data = array();
+            $data["id"]            = $record["id"];
+            $data["user"]          = $record["user"];
+
+            $data["city"]          = $record["city"];
+            $data["guest"]         = $record["guest"];
+            $data["date"]          = $record["date"];
+            $data["meal"]          = $record["meal"];
+            $data["cuisine"]       = $record["cuisine"];
+            $data["ingredients"]   = $record["ingredients"];
+            $data["restrictions"]  = $record["restrictions"];
+            $data["conditions"]    = $record["conditions"];
+
+            $data["dishes"]        = $record["dishes"];
+            $data["request"]       = $record["request"];
+            $data["direct_request"]  = $record["direct_request"];
+
+            $data["status"]          = $record["status"];
+            $data["created_on"]      = $record["created_on"];
+
+            array_push($ListArray,$data);
+
+        }
+
+    }
+
+    return $ListArray;
+}
+
+function getChefSelectiveOrders($conn, $uid){
+    $GetCategories = "SELECT * FROM tbl_bookings WHERE status = 'Order Received' AND request = 'Selective' AND direct_request = '$uid' ORDER BY id DESC";
     $Results    = mysqli_query($conn,$GetCategories);
     $ListArray = array();
 
@@ -302,7 +342,7 @@ function getAllOrdersForChef($conn){
 }
 
 function getChefOrders($conn, $id){
-    $GetCategories = "SELECT * FROM tbl_bookings WHERE direct_request = '$id' ORDER BY id DESC";
+    $GetCategories = "SELECT * FROM tbl_bookings WHERE direct_request = '$id' AND status = 'Accepted' ORDER BY id DESC";
     $Results    = mysqli_query($conn,$GetCategories);
     $ListArray = array();
 
@@ -365,6 +405,44 @@ function getUserDetails($conn, $id){
 
 }
 
+function getChefDetails($conn){
+    $Profile = "assets/img/profile.jpg";
+
+        $Query = "SELECT * FROM tbl_login WHERE user_type = 'chef'";
+        $Results = mysqli_query($conn,$Query);
+        $ChefArray = array();
+
+        if (mysqli_num_rows($Results) > 0) 
+        {
+            while($record = mysqli_fetch_assoc($Results)) 
+            {
+                $data = array();
+                $data["id"]              = $record["id"];
+                $data["username"]        = $record["username"];
+                $data["email"]           = $record["email"];
+                $data["exp"]             = $record["exp"];
+                $data["city"]            = $record["city"];
+
+                if (empty($record['image'])) {
+                    $data["image"]           = $Profile;
+                }else{
+                    $data["image"]           = $record["image"];
+                }
+
+
+                // $data["image"]           = isset($record['image']) ? $record["image"] : $Profile;
+            
+                // $data["image"]           = $Profile;
+
+                array_push($ChefArray,$data);
+
+            }
+
+        }
+        return $ChefArray;
+
+}
+
 function getSingleOrderDetails($conn, $id){
     $GetCategories = "SELECT * FROM tbl_bookings WHERE id = '$id'";
     $Results    = mysqli_query($conn,$GetCategories);
@@ -382,6 +460,7 @@ function getSingleOrderDetails($conn, $id){
             $data["guest"]         = $record["guest"];
             $data["date"]          = $record["date"];
             $data["meal"]          = $record["meal"];
+            // $data["menu"]          = $record["menu"];
             $data["cuisine"]       = $record["cuisine"];
             $data["ingredients"]   = $record["ingredients"];
             $data["restrictions"]  = $record["restrictions"];
